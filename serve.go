@@ -21,12 +21,12 @@ func (pool *CertPool) ServeHTTPS(w http.ResponseWriter, req *http.Request, serve
 
 	realReq, err := http.ReadRequest(bufio.NewReader(conn))
 	if err != nil {
-		return err
+		return errors.Wrap(err)
 	}
 	requestURI := "https://" + req.RequestURI + realReq.RequestURI
 	uri, err := url.Parse(requestURI)
 	if err != nil {
-		return err
+		return errors.Wrap(err)
 	}
 	realReq.RequestURI = requestURI
 	realReq.URL = uri
@@ -52,7 +52,7 @@ func (pool *CertPool) hijack(w http.ResponseWriter, req *http.Request) (net.Conn
 	conn, err := pool.fakeSecureConn(tlsConn, host)
 	if err != nil {
 		tlsConn.Close()
-		return nil, errors.Wrap(err)
+		return nil, err
 	}
 	return conn, nil
 }
@@ -85,5 +85,5 @@ func (w *responseWriter) finish(conn net.Conn) error {
 		Body:       ioutil.NopCloser(&w.buf),
 		Close:      true,
 	}
-	return resp.Write(conn)
+	return errors.Wrap(resp.Write(conn))
 }

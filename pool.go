@@ -50,6 +50,7 @@ func (pool *CertPool) fakeSecureConn(conn net.Conn, host string) (net.Conn, erro
 	return tls.Server(conn, &tls.Config{
 		Certificates: []tls.Certificate{*cert},
 		ServerName:   host,
+		//InsecureSkipVerify: true,
 	}), nil
 }
 
