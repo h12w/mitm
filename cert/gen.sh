@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-openssl genrsa -out key.orig 1024
-openssl req -new -key key.orig -out key.csr
-openssl rsa -in key.orig -out key
-openssl x509 -req -days 3650 -in key.csr -signkey key -out crt
+# http://pages.cs.wisc.edu/~zmiller/ca-howto/
+
+openssl genrsa -out key 1024
+openssl req -new -x509 -days 3650 -key key -out crt
