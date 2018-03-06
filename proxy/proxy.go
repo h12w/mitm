@@ -5,9 +5,9 @@ import (
 	"io"
 	"net/http"
 
-	"appcoachs.net/x/log"
 	"h12.me/errors"
 	"h12.me/mitm"
+	"log"
 )
 
 type Proxy struct {
@@ -30,7 +30,7 @@ func (p *Proxy) Serve(w http.ResponseWriter, req *http.Request) {
 	if req.Method == "CONNECT" {
 		err := p.certs.ServeHTTPS(w, req, p.serveHTTP)
 		if err != nil {
-			log.Error(errors.Wrap(err))
+			log.Println(errors.Wrap(err))
 		}
 	} else {
 		p.serveHTTP(w, req)
@@ -60,7 +60,7 @@ func (p *Proxy) serveHTTP(w http.ResponseWriter, req *http.Request) {
 
 	resp, err := p.roundTripper.RoundTrip(req)
 	if err != nil {
-		log.Error(errors.Wrap(err))
+		log.Println(errors.Wrap(err))
 		return
 	}
 
@@ -88,7 +88,7 @@ func (p *Proxy) serveHTTP(w http.ResponseWriter, req *http.Request) {
 	}
 	w.WriteHeader(resp.StatusCode)
 	if _, err := io.Copy(w, resp.Body); err != nil {
-		log.Error(errors.Wrap(err))
+		log.Println(errors.Wrap(err))
 	}
 }
 
