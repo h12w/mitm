@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"h12.me/errors"
+	"h12.io/errors"
 )
 
 // ServeHTTPS intercepts an HTTPS request and serve it as a normal HTTP request

@@ -14,7 +14,7 @@ import (
 	"path"
 	"sync"
 
-	"h12.me/errors"
+	"h12.io/errors"
 )
 
 // CertPool maitains a pool of faked TLS certificates

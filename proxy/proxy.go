@@ -5,8 +5,8 @@ import (
 	"io"
 	"net/http"
 
-	"h12.me/errors"
-	"h12.me/mitm"
+	"h12.io/errors"
+	"h12.io/mitm"
 	"log"
 )
 
